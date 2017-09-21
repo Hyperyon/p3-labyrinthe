@@ -32,12 +32,8 @@ while True: #SET TRUE WHEN READY
         break
 
     if key != 224: #when stroke arrow key that generate 224 value
-
         eval(key_map[key])
-
         print pos
-        print key
-
 
     if tuple(pos) in items:
         items.remove(tuple(pos)) #delete item when taken
