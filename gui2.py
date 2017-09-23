@@ -1,4 +1,6 @@
 # -*- coding:Utf-8 -*-
+'''This is >>procedural<< version of game'''
+
 import pygame as pyg
 import random as r
 import get_data as data
