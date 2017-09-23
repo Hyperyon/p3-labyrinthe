@@ -28,7 +28,7 @@ fenetre = pyg.display.set_mode((600, 600))
 background = pyg.image.load(dir+"bg.png").convert()
 tile = pyg.image.load(dir+"tile.png").convert()
 keeper = pyg.image.load(dir+"keeper.png").convert()
-player = pyg.image.load(dir+"MG.gif").convert()
+player = pyg.image.load(dir+"player.png").convert()
 item = pyg.image.load(dir+"item.png").convert()
 fenetre.blit(player,(0,0))
 pyg.display.flip()#refresh display
@@ -43,11 +43,13 @@ keyboard_input = { pyg.K_DOWN:'move_y(my_position, 40)',
                    pyg.K_LEFT:'move_x(my_position, -40)',
                    pyg.K_RIGHT:'move_x(my_position, 40)',}
 
-while True:
+enable = True
+
+while enable:
     for event in pyg.event.get(): #waiting input key
         if event.type == pyg.KEYDOWN:
             if event.key == pyg.K_ESCAPE:
-                break
+                enable = False
             if keyboard_input.has_key(event.key):
                 my_position = eval(keyboard_input[event.key])
 
