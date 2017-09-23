@@ -3,7 +3,7 @@ import pygame as pyg
 import random as r
 import get_data as data
 
-dir = 'C:/Users/nico/Desktop/Nico/0Python/2017/tp/P3 - Labyrinthe/p3-labyrinthe/img/'
+dir = '/home/hyperyon/Bureau/nico/p3-labyrinthe/img/'
 
 class Object:
     '''This class manage the behaviour of each item in the game'''
@@ -76,11 +76,11 @@ def start_game():
             remaining_item -=1
 
         if pos == keeper_pos:
-            print pos
+            print(pos)
             if remaining_item:
-                print 'you lose'
+                print('you lose')
             else:
-                print 'you win !'
+                print('you win !')
             break
 
         for path in player.allowed_tile:
