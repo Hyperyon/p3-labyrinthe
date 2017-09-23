@@ -8,7 +8,6 @@ dir = 'C:/Users/nico/Desktop/Nico/0Python/2017/tp/P3 - Labyrinthe/p3-labyrinthe/
 allowed_tile = [(x[0]*40, x[1]*40) for x in data.get_map()]
 items = [(x[0], x[1]) for x in r.sample(allowed_tile,5)]
 remaining_item = len(items)
-
 keeper_pos = (14*40,14*40)
 
 def move_x(pos, x):
@@ -30,12 +29,15 @@ tile = pyg.image.load(dir+"tile.png").convert()
 keeper = pyg.image.load(dir+"keeper.png").convert()
 player = pyg.image.load(dir+"player.png").convert()
 item = pyg.image.load(dir+"item.png").convert()
+
+font = pyg.font.Font(None, 40)
+text = font.render(str(remaining_item), 1, (10,10,10))
+textpos = text.get_rect()
+
 fenetre.blit(player,(0,0))
 pyg.display.flip()#refresh display
 
 my_position = player.get_rect()
-
-print my_position
 
 pyg.key.set_repeat(400, 30)
 keyboard_input = { pyg.K_DOWN:'move_y(my_position, 40)',
@@ -73,6 +75,9 @@ while enable:
     for element in items:
         fenetre.blit(item, element)
 
+    text = font.render(str(remaining_item), 1, (10,10,10))
+    fenetre.blit(text, textpos)
     fenetre.blit(keeper, keeper_pos)
     fenetre.blit(player, my_position)
+
     pyg.display.flip()
