@@ -65,7 +65,7 @@ def start_game():
                 if event.type == pyg.KEYDOWN:
                     if event.key == pyg.K_ESCAPE:
                         enable = False
-                    if keyboard_input.has_key(event.key):
+                    if event.key in keyboard_input:
                         my_position = eval(keyboard_input[event.key])
 
         player.fenetre.blit(background.bg, (0,0))
