@@ -5,7 +5,7 @@ import pygame as pyg
 import random as r
 import get_data as data
 
-dir = 'C:/Users/nico/Desktop/Nico/0Python/2017/tp/P3 - Labyrinthe/p3-labyrinthe/img/'
+dir = '/img/'
 
 allowed_tile = [(x[0]*40, x[1]*40) for x in data.get_map()]
 items = [(x[0], x[1]) for x in r.sample(allowed_tile,5)]
