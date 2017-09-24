@@ -54,7 +54,7 @@ while enable:
         if event.type == pyg.KEYDOWN:
             if event.key == pyg.K_ESCAPE:
                 enable = False
-            if keyboard_input.has_key(event.key):
+            if event.key in keyboard_input:
                 my_position = eval(keyboard_input[event.key])
 
     fenetre.blit(background, (0,0))
@@ -67,9 +67,9 @@ while enable:
     if pos == keeper_pos:
         print pos
         if remaining_item:
-            print 'you lose'
+            print('you lose')
         else:
-            print 'you win !'
+            print('you win !')
         break
 
     for path in allowed_tile:
