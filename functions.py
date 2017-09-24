@@ -3,12 +3,12 @@ import pygame as pyg
 import random as r
 import get_data as data
 
-dir = 'C:/Users/nico/Desktop/Nico/0Python/2017/tp/P3 - Labyrinthe/p3-labyrinthe/img/'
+dir = '/img/'
 
 class Object:
     '''This class manage the behaviour of each item in the game'''
     pyg.init()
-    fenetre = pyg.display.set_mode((600, 600))
+    window = pyg.display.set_mode((600, 600))
     allowed_tile = [(x[0]*40, x[1]*40) for x in data.get_map()]
     items = [(x[0], x[1]) for x in r.sample(allowed_tile,5)]
     font = pyg.font.Font(None, 40)
@@ -53,7 +53,7 @@ def start_game():
     remaining_item = len(player.items)
     keeper_pos = (14*40,14*40)
 
-    player.fenetre.blit(player.player,(0,0))
+    player.window.blit(player.player,(0,0))
     player.refresh()
     my_position = player.get_position()
 
@@ -65,10 +65,10 @@ def start_game():
                 if event.type == pyg.KEYDOWN:
                     if event.key == pyg.K_ESCAPE:
                         enable = False
-                    if keyboard_input.has_key(event.key):
+                    if event.key in keyboard_input:
                         my_position = eval(keyboard_input[event.key])
 
-        player.fenetre.blit(background.bg, (0,0))
+        player.window.blit(background.bg, (0,0))
 
         pos = (my_position[0], my_position[1])
         if pos in player.items:
@@ -76,23 +76,23 @@ def start_game():
             remaining_item -=1
 
         if pos == keeper_pos:
-            print pos
+            print(pos)
             if remaining_item:
-                print 'you lose'
+                print('you lose')
             else:
-                print 'you win !'
+                print('you win !')
             break
 
         for path in player.allowed_tile:
-            player.fenetre.blit(tile.tile, path)
+            player.window.blit(tile.tile, path)
         for element in player.items:
-            player.fenetre.blit(item.item, element)
+            player.window.blit(item.item, element)
 
         text = player.font.render(str(remaining_item), 1, (10,10,10))
-        player.fenetre.blit(text, player.textpos)
+        player.window.blit(text, player.textpos)
 
-        player.fenetre.blit(keeper.keeper, keeper_pos)
-        player.fenetre.blit(player.player, my_position)
+        player.window.blit(keeper.keeper, keeper_pos)
+        player.window.blit(player.player, my_position)
         player.refresh()
 
 
