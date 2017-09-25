@@ -3,7 +3,7 @@ import pygame as pyg
 import random as r
 import get_data as data
 
-dir = '/img/'
+dir = 'absolute_path_dir/img/'
 
 class Object:
     '''This class manage the behaviour of each item in the game'''
