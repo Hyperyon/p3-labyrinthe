@@ -95,4 +95,4 @@ def start_game():
 
         player.window.blit(keeper.keeper, keeper_pos)
         player.window.blit(player.player, my_position)
-player.refresh()
+        player.refresh()
