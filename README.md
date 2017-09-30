@@ -10,7 +10,7 @@ Keyboard control :
 * Arrow keys to move
 * Esc to quit game
 
-<br><br>
+<br>
 <p align="center">
 <img alt="Demo" src="https://i.imgur.com/08bXvcq.gif" width="50%">
 </p>
