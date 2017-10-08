@@ -1,0 +1,142 @@
+# -*- coding:Utf-8 -*-
+import pygame as pyg
+import random as r
+
+dir = 'img/'
+
+keyboard_input = {pyg.K_DOWN:'interface.move_y(40)', 
+                  pyg.K_UP:'interface.move_y(-40)', 
+                  pyg.K_LEFT:'interface.move_x(-40)', 
+                  pyg.K_RIGHT:'interface.move_x(40)',}
+
+class UserInterface:
+
+    ''' Manage graphical user interface. '''
+
+    ELEMENTS = ['player','bg','tile','keeper','item']
+
+    def __init__(self):
+        pyg.init()
+        self.window = pyg.display.set_mode((600, 600))
+        self.font = pyg.font.Font(None, 40)
+        self.load_element()
+
+        self.position = self.player.get_rect()
+        self.keeper_position = (14*40, 14*40,)
+
+        # need to upgrade
+        my_maze = Maze()
+        self.allowed_tiles = my_maze.get_map()
+        self.objects = [(x[0], x[1],) for x in r.sample(self.allowed_tiles, 5,)]
+
+    def load_element(self):
+        for item in UserInterface.ELEMENTS:
+            setattr(self, item, pyg.image.load(dir + item + ".png").convert())
+
+    def show_text(self, message):       # need to upgrade
+        self.text = self.font.render((str(message)), 1, (10, 10, 10,))
+        self.textpos = self.text.get_rect()
+        self.window.blit(self.text, self.textpos)
+
+    def show_element(self):
+        self.window.blit(self.bg, (0, 0,))
+        for tile in self.allowed_tiles:
+            self.window.blit(self.tile, tile)
+        for item in self.objects:
+            self.window.blit(self.item, item)
+
+        self.show_text(str(len(self.objects)))
+        self.window.blit(self.player, self.position)
+        self.window.blit(self.keeper, self.keeper_position)
+
+    def refresh(self):
+        pyg.display.flip()
+
+    def repeat_key(self):
+        pyg.key.set_repeat(400, 30)
+
+    def move_x(self, x):
+        if not (self.position[0] + x, self.position[1],) in self.allowed_tiles:
+            x = 0
+        self.position = self.position.move(x, 0)
+
+    def move_y(self, y):
+        if not (self.position[0], self.position[1] + y,) in self.allowed_tiles:
+            y = 0
+        self.position = self.position.move(0, y)
+
+    def check_objects(self):
+        pos = (self.position[0], self.position[1])
+        
+        if pos in self.objects:
+            self.objects.remove(pos)        # delete item when taken 
+        if pos == self.keeper_position:
+            self.check_end_game()
+            return False        # end game
+
+        return True     #   continue game
+
+    def check_end_game(self):
+        if len(self.objects):
+            print('you loose')
+        else:
+            print('you win')
+
+
+
+class GameElements:
+
+    def __init__(self):
+        pass
+
+class GamePlay:
+
+    def __init__(self):
+        pass
+
+
+class Maze:
+
+    def __init__(self):
+        self.x = 0
+        self.y = 0
+        self.position = []
+
+    def read_data_file(self):
+        with open('data', 'r') as f:
+            data = f.read().split('\n')
+            return data
+        return False     # if fail to read file
+
+    def get_map(self):
+        data = self.read_data_file()
+
+        if data:
+            for i, item in enumerate(data):     # need reverse read
+                self.y = i
+                for h, letter in enumerate(item):
+                    if letter == 'O':
+                        self.x = h
+                        self.position.append((self.x*40, self.y*40,))
+            return self.position    # need to upgrade
+
+
+def start_game():
+
+    interface = UserInterface()
+    interface.repeat_key()      # move few times the character when key pressed for a long time
+    continue_game = True
+
+    while 'user playing' and continue_game:
+
+        for event in pyg.event.get():       # waiting input key from user
+            if event.type == pyg.KEYDOWN:
+                if event.key == pyg.K_ESCAPE:
+                    continue_game = False       # end game when pressed escape key
+                if event.key in keyboard_input:
+                    eval(keyboard_input[event.key])
+
+        interface.show_element()
+        if not interface.check_objects():
+            break       # when player is next to the keeper, the game ends
+        interface.refresh()
