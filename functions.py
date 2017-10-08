@@ -4,10 +4,10 @@ import random as r
 
 dir = 'img/'
 
-keyboard_input = {pyg.K_DOWN:'interface.move_y(40)', 
-                  pyg.K_UP:'interface.move_y(-40)', 
-                  pyg.K_LEFT:'interface.move_x(-40)', 
-                  pyg.K_RIGHT:'interface.move_x(40)',}
+keyboard_input = {pyg.K_DOWN:'player.move_y(40)', 
+                  pyg.K_UP:'player.move_y(-40)', 
+                  pyg.K_LEFT:'player.move_x(-40)', 
+                  pyg.K_RIGHT:'player.move_x(40)',}
 
 class UserInterface:
 
@@ -22,24 +22,23 @@ class UserInterface:
         self.load_element()
 
         self.position = self.player.get_rect()
-        self.keeper_position = (14*40, 14*40,)
+        self.keeper_position = (14*40, 14*40)
 
-        # need to upgrade
         my_maze = Maze()
         self.allowed_tiles = my_maze.get_map()
-        self.objects = [(x[0], x[1],) for x in r.sample(self.allowed_tiles, 5,)]
+        self.objects = [(x[0], x[1]) for x in r.sample(self.allowed_tiles, 5)]
 
     def load_element(self):
         for item in UserInterface.ELEMENTS:
             setattr(self, item, pyg.image.load(dir + item + ".png").convert())
 
-    def show_text(self, message):       # need to upgrade
-        self.text = self.font.render((str(message)), 1, (10, 10, 10,))
+    def show_text(self, message):
+        self.text = self.font.render((str(message)), 1, (10, 10, 10))
         self.textpos = self.text.get_rect()
         self.window.blit(self.text, self.textpos)
 
     def show_element(self):
-        self.window.blit(self.bg, (0, 0,))
+        self.window.blit(self.bg, (0, 0))
         for tile in self.allowed_tiles:
             self.window.blit(self.tile, tile)
         for item in self.objects:
@@ -55,47 +54,46 @@ class UserInterface:
     def repeat_key(self):
         pyg.key.set_repeat(400, 30)
 
+
+
+class GamePlay:
+
+    """ Manage mechanisms of game. """
+
+    def __init__(self, player):
+        self.player = player
+
     def move_x(self, x):
-        if not (self.position[0] + x, self.position[1],) in self.allowed_tiles:
+        if not (self.player.position[0] + x, self.player.position[1]) in self.player.allowed_tiles:
             x = 0
-        self.position = self.position.move(x, 0)
+        self.player.position = self.player.position.move(x, 0)
 
     def move_y(self, y):
-        if not (self.position[0], self.position[1] + y,) in self.allowed_tiles:
+        if not (self.player.position[0], self.player.position[1] + y) in self.player.allowed_tiles:
             y = 0
-        self.position = self.position.move(0, y)
+        self.player.position = self.player.position.move(0, y)
 
     def check_objects(self):
-        pos = (self.position[0], self.position[1])
+        pos = (self.player.position[0], self.player.position[1])
         
-        if pos in self.objects:
-            self.objects.remove(pos)        # delete item when taken 
-        if pos == self.keeper_position:
+        if pos in self.player.objects:
+            self.player.objects.remove(pos)        # delete item when taken 
+        if pos == self.player.keeper_position:
             self.check_end_game()
             return False        # end game
 
         return True     #   continue game
 
     def check_end_game(self):
-        if len(self.objects):
+        if len(self.player.objects):
             print('you loose')
         else:
             print('you win')
 
 
-
-class GameElements:
-
-    def __init__(self):
-        pass
-
-class GamePlay:
-
-    def __init__(self):
-        pass
-
-
 class Maze:
+
+    """ Read data file to generate maze. """
 
     def __init__(self):
         self.x = 0
@@ -117,14 +115,15 @@ class Maze:
                 for h, letter in enumerate(item):
                     if letter == 'O':
                         self.x = h
-                        self.position.append((self.x*40, self.y*40,))
-            return self.position    # need to upgrade
+                        self.position.append((self.x*40, self.y*40))
+            return self.position 
 
 
 def start_game():
 
     interface = UserInterface()
     interface.repeat_key()      # move few times the character when key pressed for a long time
+    player = GamePlay(interface)
     continue_game = True
 
     while 'user playing' and continue_game:
@@ -137,6 +136,6 @@ def start_game():
                     eval(keyboard_input[event.key])
 
         interface.show_element()
-        if not interface.check_objects():
+        if not player.check_objects():
             break       # when player is next to the keeper, the game ends
         interface.refresh()
