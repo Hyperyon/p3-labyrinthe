@@ -13,11 +13,14 @@ class UserInterface:
 
     ''' Manage graphical user interface. '''
 
+
+                # main elements used by interface
     ELEMENTS = ['player','bg','tile','keeper','item']
 
     def __init__(self):
         pyg.init()
-        self.window = pyg.display.set_mode((600, 600))
+                # make a window 600 by 600 pixel
+        self.window = pyg.display.set_mode((600, 600)) 
         self.font = pyg.font.Font(None, 40)
         self.load_element()
 
@@ -26,6 +29,8 @@ class UserInterface:
 
         my_maze = Maze()
         self.allowed_tiles = my_maze.get_map()
+
+                # generate 5 random object coordinates
         self.objects = [(x[0], x[1]) for x in r.sample(self.allowed_tiles, 5)]
 
     def load_element(self):
@@ -38,10 +43,13 @@ class UserInterface:
         self.window.blit(self.text, self.textpos)
 
     def show_element(self):
+                # show background first
         self.window.blit(self.bg, (0, 0))
+                # then show the maze path, 
         for tile in self.allowed_tiles:
             self.window.blit(self.tile, tile)
-        for item in self.objects:
+                # and item that will be taken by player
+        for item in self.objects:    
             self.window.blit(self.item, item)
 
         self.show_text(str(len(self.objects)))
@@ -73,7 +81,8 @@ class GamePlay:
             y = 0
         self.player.position = self.player.position.move(0, y)
 
-    def check_objects(self):
+    def check_objects(self):        
+            # compare player position with objects and keeper position
         pos = (self.player.position[0], self.player.position[1])
         
         if pos in self.player.objects:
@@ -82,7 +91,7 @@ class GamePlay:
             self.check_end_game()
             return False        # end game
 
-        return True     #   continue game
+        return True         # continue game
 
     def check_end_game(self):
         if len(self.player.objects):
@@ -98,7 +107,7 @@ class Maze:
     def __init__(self):
         self.x = 0
         self.y = 0
-        self.position = []
+        self.ok_tiles_positions = []
 
     def read_data_file(self):
         with open('data', 'r') as f:
@@ -110,13 +119,13 @@ class Maze:
         data = self.read_data_file()
 
         if data:
-            for i, item in enumerate(data):     # need reverse read
+            for i, item in enumerate(data):
                 self.y = i
                 for h, letter in enumerate(item):
                     if letter == 'O':
                         self.x = h
-                        self.position.append((self.x*40, self.y*40))
-            return self.position 
+                        self.ok_tiles_positions.append((self.x*40, self.y*40))
+            return self.ok_tiles_positions 
 
 
 def start_game():

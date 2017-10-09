@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #-*- coding:Utf-8 -*-
 
-import functions as f
+import function as f
 
 
 if __name__ == '__main__':
