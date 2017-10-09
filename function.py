@@ -12,8 +12,6 @@ keyboard_input = {pyg.K_DOWN:'player.move_y(40)',
 class UserInterface:
 
     ''' Manage graphical user interface. '''
-
-
                 # main elements used by interface
     ELEMENTS = ['player','bg','tile','keeper','item']
 
