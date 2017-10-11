@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
-
 from setuptools import setup, find_packages
 import labyrinth
  
 with open('requirements.txt') as f:
     requires = f.read().split('\n')
-
-
 
 setup(
 
