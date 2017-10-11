@@ -9,7 +9,7 @@ with open('requirements.txt') as f:
 
 setup(
 
-    name='oc-labyrinth',
+    name='nz-labyrinth',
     version=3.2,
  
     packages=find_packages(),
