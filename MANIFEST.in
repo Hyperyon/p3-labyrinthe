@@ -1,0 +1,3 @@
+include *.md
+recursive-include labyrinth/ data
+recursive-include labyrinth/img/ *.png

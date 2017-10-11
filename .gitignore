@@ -1,0 +1,7 @@
+/bin
+/extra
+/lib
+/include
+/labyrinth/__pycache__
+__pycache__
+*pyc
