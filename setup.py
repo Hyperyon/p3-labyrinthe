@@ -26,7 +26,6 @@ setup(
         'Programming Language :: Python',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.5',
-        'Topic :: Game',
     ],
  
 )
