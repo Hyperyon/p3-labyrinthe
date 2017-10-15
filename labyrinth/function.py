@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import pygame as pyg
 import random as r
 
@@ -15,7 +16,7 @@ class UserInterface:
     ''' Manage graphical user interface. '''
 
     # main elements used by interface
-    ELEMENTS = ['player','bg','tile','keeper','item']
+    ELEMENTS = ['player','wall_background','tile','keeper','item']
 
     def __init__(self):
         pyg.init()
@@ -44,7 +45,7 @@ class UserInterface:
 
     def show_element(self):
         # show background first
-        self.window.blit(self.bg, (0, 0))
+        self.window.blit(self.wall_background, (0, 0))
         # show the maze path
         for tile in self.allowed_tiles:
             self.window.blit(self.tile, tile)
