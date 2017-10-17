@@ -5,7 +5,7 @@
 2. Escape from the labyrinth
 3. Watch out for the guard!
 
-Keyboard controls :
+### Keyboard controls
 
 * Arrow keys to move
 * Esc to quit game
@@ -19,5 +19,5 @@ pip install nz-labyrinth
 
 <br>
 <p align="center">
-<img alt="Demo" src="https://i.imgur.com/08bXvcq.gif" width="50%">
+<img alt="Demo" src="https://i.imgur.com/Z4yEqfb.gif" width="50%">
 </p>
