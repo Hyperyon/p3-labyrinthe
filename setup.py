@@ -10,7 +10,7 @@ with open('requirements.txt') as f:
 setup(
 
     name='nz-labyrinth',
-    version=3.2,
+    version=3.6,
  
     packages=find_packages(),
     install_requires=requires,
