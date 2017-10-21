@@ -1,17 +1,21 @@
-# p3-labyrinthe
-### Goal of this mini game
+P3-labyrinthe
+===
+Program generating a maze in which the player must collect all items to get out and win 
 
+Goal of this mini game
+---
 1. Collect objects
 2. Escape from the labyrinth
 3. Watch out for the guard!
 
-### Keyboard controls
-
+Keyboard controls
+---
 * Arrow keys to move
 * Esc to quit game
 
 
-### Easy installation 
+Easy installation 
+---
 
 ```bash
 pip install nz-labyrinth
